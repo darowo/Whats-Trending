@@ -1,8 +1,36 @@
 <html>
   <head>
+  <style>
+div {
+    border: 1px solid black;
+    background-color: lightblue;
+    padding-top: 50px;
+    padding-right: 30px;
+    padding-bottom: 50px;
+    padding-left: 80px;
+}
+</style>
+  <h1> Top Trending Tweets</h1>
     <script type="text/javascript" src="codebird.js"></script>
     <script type="text/javascript" src="jquery-3.1.1.min.js"></script>
-    <script type="text/javascript">
+
+    <style>
+      body 
+
+        h1 {
+          color: black;
+          text-align: center;
+          }
+
+        p {
+          font-family: verdana;
+          font-size: 20px;
+          }
+</style>
+</head>
+<body>
+      <h3> Your Current Location: </h3>
+      <script type="text/javascript">
 
       getLocation();
 
@@ -13,7 +41,7 @@
           x.innerHTML = "Geolocation is not supported by this browser.";
         }
       }
-
+      
       function showPosition(position) {
         var x = document.getElementById("demo");
         x.innerHTML = "Latitude: " + position.coords.latitude + 
@@ -77,8 +105,6 @@
         );
       }
     </script>
-  </head>
-  <body>
     <div id='demo'>
     </div>
     <div id='trends'>
