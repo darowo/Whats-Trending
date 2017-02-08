@@ -1,0 +1,29 @@
+<html>
+    <head>
+    <script type="text/javascript" src="codebird.js"></script>
+     <script>
+    var cb = new Codebird;
+cb.setBearerToken("AAAAAAAAAAAAAAAAAAAAAJFkzAAAAAAA4phsrgmwTMEzGTsGWCRDPARInd8%3DVG9TjC7KbSwHfPb2h59johxn5PfderyYhwOKoSHMU3eputDjaf");
+
+cb.__call(
+  "trends_closest",
+  {
+      lat: '53.2602149',
+      long: '-6.2047205'
+  },
+  function (reply, err) {
+    if (err) {
+      console.log("error response or timeout exceeded" + err.error);
+    }
+    if (reply) {
+      var woeid = reply[0].woeid;
+      console.log(woeid);
+    }
+  },
+  true
+);
+</script>
+    </head>
+    <body>
+   </body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head> 
+   <script type="text/javascript" src="codebird.js"></script>
+   <script type="text/javascript">
+
+getLocation();
+
+function getLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(showPosition);
+  } else {
+    x.innerHTML = "Geolocation is not supported by this browser.";
+  }
+}
+
+function showPosition(position) {
+  var x = document.getElementById("demo");
+  x.innerHTML = "Latitude: " + position.coords.latitude + "<br>Longitude: " + position.coords.longitude;
+}
+console.log('Some message here')
+showPosition()
+</script>
+<body>
+   <h2>Whats Trending</h2>
+   <div id='demo'>
+</div>
+</form>
+</body>

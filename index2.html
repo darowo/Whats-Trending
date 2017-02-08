@@ -1,0 +1,30 @@
+<html>
+    <head>
+        <script type="text/javascript" src="codebird.js"></script>
+        <script type="text/javascript">
+            var cb = new Codebird;
+            var bearer_token;
+
+            var asdfjk = "egrZfq0Pmzd1I7bSG7gA4Cumn";
+
+            cb.setConsumerKey(asdfjk, "iGy6hlnzYE3NyMbcJL0EfkINTFvc4AiwLbB53v0no4mqJUVoHq");
+            cb.__call(
+            "oauth2_token",
+            {},
+            function (reply, err) {
+            if (err) {
+              console.log("error response or timeout exceeded" + err.error);
+            }
+            if (reply) {
+            bearer_token = reply.access_token;
+            cb.setBearerToken(bearer_token);
+
+            alert('Authorisation Token = ' + bearer_token);
+          }
+        }
+      )
+        </script>
+    </head>
+    <body>
+    </body>
+</html>
