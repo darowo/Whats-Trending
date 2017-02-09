@@ -40,6 +40,20 @@ div {
 </head>
 <body>
       <h3> Your Current Location: </h3>
+      
+     <script> 
+       $(document).ready(function(){
+          $("a").click(funtion(e) {
+               e.preventDefault();
+
+               $("#iframe1").attr("src", $(this).attr("href"));
+          })
+       });
+
+
+     </script>
+
+
       <script type="text/javascript">
       
 
@@ -50,6 +64,7 @@ div {
         debugger;
         alert('!!!');
       })
+
 
       function getLocation() {
         if (navigator.geolocation) {
