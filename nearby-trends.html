@@ -3,7 +3,7 @@
   <style>
 div {
     border: 1px solid black;
-    background-color: lightblue;
+    background-color: #99ccff;
     padding-top: 50px;
     padding-right: 30px;
     padding-bottom: 50px;
@@ -26,13 +26,30 @@ div {
           font-family: verdana;
           font-size: 20px;
           }
+
+      #left-pane {
+        width: 25%;
+        float: left;
+      }
+
+      #right-pane {
+        width: 60%;
+        float: right;
+      }
 </style>
 </head>
 <body>
       <h3> Your Current Location: </h3>
       <script type="text/javascript">
+      
 
       getLocation();
+
+      $(document).on('click', '#left-pane a', function(event) {
+        event.preventDefault();
+        debugger;
+        alert('!!!');
+      })
 
       function getLocation() {
         if (navigator.geolocation) {
@@ -87,10 +104,10 @@ div {
 
                           $(function() {
                             var trends = reply[0].trends;
-                            var trendsContainer = $('#trends');
+                            var trendsContainer = $('#left-pane');
 
                             for (var i = 0; i < trends.length; i++) {
-                              trendsContainer.append(trends[i].name);
+                              trendsContainer.append('<a href="' + trends[i].url + '">' + trends[i].name + '</a>');
                               trendsContainer.append('<br>');
                             }
                           })
@@ -99,7 +116,6 @@ div {
                    }
                  }
               )
-
             }
           }
         );
@@ -108,6 +124,11 @@ div {
     <div id='demo'>
     </div>
     <div id='trends'>
+      <div id='left-pane'>
+      </div>
+      <div id='right-pane'>
+       <iframe  name="iframe1" src="" width=100% height="600" scrolling="yes"> </iframe> 
+      </div>
     </div>
   </body>
 </html>
