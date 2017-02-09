@@ -9,6 +9,10 @@ div {
     padding-bottom: 50px;
     padding-left: 80px;
 }
+  
+  .tweet {
+    border: 1px solid black;
+  }
 </style>
   <h1> Top Trending Tweets</h1>
     <script type="text/javascript" src="codebird.js"></script>
@@ -40,20 +44,7 @@ div {
 </head>
 <body>
       <h3> Your Current Location: </h3>
-      
-     <script> 
-       $(document).ready(function(){
-          $("a").click(funtion(e) {
-               e.preventDefault();
-
-               $("#iframe1").attr("src", $(this).attr("href"));
-          })
-       });
-
-
-     </script>
-
-
+    
       <script type="text/javascript">
       
 
@@ -61,8 +52,39 @@ div {
 
       $(document).on('click', '#left-pane a', function(event) {
         event.preventDefault();
-        debugger;
-        alert('!!!');
+        $('#iframe1').attr('src', $(this)[0].href)
+
+        window.cb.__call(
+          "search_tweets",
+          {
+            q: $(this)[0].text,
+          },
+          function (reply, err) {
+            if (err) {
+              console.log("error response or timeout exceeded" + err.error);
+            }
+            if (reply) {
+              var tweets = reply.statuses
+              var tweetsContainer = $('#tweets')
+
+              for (var i = 0; i < tweets.length; i++) {
+                tweetsContainer.append(
+                  '<div class="tweet">' +
+                    // tweetsContainer.append('<a href="' + tweets[i].entities.urls[0].url + '">' + tweets[i].text + '</a>')
+                    '<p>' + tweets[i].text + '</p>' +
+                    '<br>' +
+                    tweets[i].source +
+                    '<br>' +
+                  '</div>'
+                )
+              }
+
+
+
+            }
+          },
+          true
+        );
       })
 
 
@@ -79,11 +101,11 @@ div {
         x.innerHTML = "Latitude: " + position.coords.latitude + 
         "<br>Longitude: " + position.coords.longitude; 
 
-        var cb = new Codebird;
+        window.cb = new Codebird;
         var twitterAppKey = 'egrZfq0Pmzd1I7bSG7gA4Cumn'
         var twitterAppSecret = 'iGy6hlnzYE3NyMbcJL0EfkINTFvc4AiwLbB53v0no4mqJUVoHq'
-        cb.setConsumerKey(twitterAppKey, twitterAppSecret);
-        cb.__call(
+        window.cb.setConsumerKey(twitterAppKey, twitterAppSecret);
+        window.cb.__call(
           "oauth2_token",
           {},
           function (reply, err) {
@@ -92,14 +114,14 @@ div {
             }
             if (reply) {
               var authorisationToken = reply.access_token;
-              cb.setBearerToken(authorisationToken);
+              window.cb.setBearerToken(authorisationToken);
 
               
               // continue here...
-              // tip, you'll have to use cb.__call "trends_closest" here inside and use {lat: position.coords.latitude, long: position.coords.longitude} as the API request parameters 
-              // afterwards, you'll need to use another cb.__call "trends_place" inside the reply function of trends_closest
+              // tip, you'll have to use window.cb.__call "trends_closest" here inside and use {lat: position.coords.latitude, long: position.coords.longitude} as the API request parameters 
+              // afterwards, you'll need to use another window.cb.__call "trends_place" inside the reply function of trends_closest
               // Finally, you'll now then be able to get the list of trends that we need (see screenshot attached, I inserted debugger to pause)
-              cb.__call(
+              window.cb.__call(
                 "trends_closest",
                  {
                    lat: position.coords.latitude,
@@ -110,7 +132,7 @@ div {
                      var woeid = reply[0].woeid;
 
 
-                     cb.__call(
+                     window.cb.__call(
                         "trends_place",
                         {
                              id: woeid
@@ -142,7 +164,8 @@ div {
       <div id='left-pane'>
       </div>
       <div id='right-pane'>
-       <iframe  name="iframe1" src="" width=100% height="600" scrolling="yes"> </iframe> 
+        <div id='tweets'>
+        </div> 
       </div>
       <div style='clear: both;'>
       </div>
