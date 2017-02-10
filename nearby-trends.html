@@ -1,14 +1,11 @@
 <html>
   <head>
+  <head>
+   <script type="text/javascript" 
+           src="http://maps.google.com/maps/api/js?sensor=false"></script>
   <style>
 div {
-    border: 1px solid black;
-    background-color: #99ccff;
-    padding-top: 50px;
-    padding-right: 30px;
-    padding-bottom: 50px;
-    padding-left: 80px;
-}
+  
   
   .tweet {
     border: 1px solid black;
@@ -19,26 +16,49 @@ div {
     <script type="text/javascript" src="jquery-3.1.1.min.js"></script>
 
     <style>
-      body 
-
+      body  {
+    background-color: #99ccff;
+}
         h1 {
           color: black;
           text-align: center;
           }
-
         p {
           font-family: verdana;
           font-size: 20px;
           }
-
       #left-pane {
         width: 25%;
         float: left;
+          border: 1px solid black;
+          background-color: #99ccff;
+          padding-top: 50px;
+          padding-right: 30px;
+          padding-bottom: 50px;
+          padding-left: 80px;
+}
       }
-
       #right-pane {
         width: 60%;
         float: right;
+         border: 1px solid black;
+          background-color: ;
+          padding-top: 50px;
+          padding-right: 30px;
+          padding-bottom: 50px;
+          padding-left: 80px;
+}
+      }
+            #map {
+        width: 60%;
+        float: right;
+         border: 1px solid black;
+          background-color: #99ccff;
+          padding-top: 50px;
+          padding-right: 30px;
+          padding-bottom: 50px;
+          padding-left: 80px;
+}
       }
 </style>
 </head>
@@ -47,13 +67,10 @@ div {
     
       <script type="text/javascript">
       
-
       getLocation();
-
       $(document).on('click', '#left-pane a', function(event) {
         event.preventDefault();
         $('#iframe1').attr('src', $(this)[0].href)
-
         window.cb.__call(
           "search_tweets",
           {
@@ -66,7 +83,6 @@ div {
             if (reply) {
               var tweets = reply.statuses
               var tweetsContainer = $('#tweets')
-
               for (var i = 0; i < tweets.length; i++) {
                 tweetsContainer.append(
                   '<div class="tweet">' +
@@ -78,16 +94,11 @@ div {
                   '</div>'
                 )
               }
-
-
-
             }
           },
           true
         );
       })
-
-
       function getLocation() {
         if (navigator.geolocation) {
           navigator.geolocation.getCurrentPosition(showPosition);
@@ -100,7 +111,6 @@ div {
         var x = document.getElementById("demo");
         x.innerHTML = "Latitude: " + position.coords.latitude + 
         "<br>Longitude: " + position.coords.longitude; 
-
         window.cb = new Codebird;
         var twitterAppKey = 'egrZfq0Pmzd1I7bSG7gA4Cumn'
         var twitterAppSecret = 'iGy6hlnzYE3NyMbcJL0EfkINTFvc4AiwLbB53v0no4mqJUVoHq'
@@ -115,7 +125,6 @@ div {
             if (reply) {
               var authorisationToken = reply.access_token;
               window.cb.setBearerToken(authorisationToken);
-
               
               // continue here...
               // tip, you'll have to use window.cb.__call "trends_closest" here inside and use {lat: position.coords.latitude, long: position.coords.longitude} as the API request parameters 
@@ -130,19 +139,15 @@ div {
                  function (reply) {
                    if (reply) {
                      var woeid = reply[0].woeid;
-
-
                      window.cb.__call(
                         "trends_place",
                         {
                              id: woeid
                         },
                         function (reply) {
-
                           $(function() {
                             var trends = reply[0].trends;
                             var trendsContainer = $('#left-pane');
-
                             for (var i = 0; i < trends.length; i++) {
                               trendsContainer.append('<a href="' + trends[i].url + '">' + trends[i].name + '</a>');
                               trendsContainer.append('<br>');
@@ -160,6 +165,17 @@ div {
     </script>
     <div id='demo'>
     </div>
+    <div id="map" style="width: 80%; height: 60%"></div> 
+
+   <script type="text/javascript"> 
+      var myOptions = {
+         zoom: 8,
+         center: new google.maps.LatLng(53.2602149,-6.2047205),
+         mapTypeId: google.maps.MapTypeId.ROADMAP
+      };
+
+      var map = new google.maps.Map(document.getElementById("map"), myOptions);
+   </script> 
     <div id='trends'>
       <div id='left-pane'>
       </div>
