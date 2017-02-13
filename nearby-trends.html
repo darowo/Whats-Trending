@@ -83,6 +83,7 @@ div {
             if (reply) {
               var tweets = reply.statuses
               var tweetsContainer = $('#tweets')
+              tweetsContainer.html('');
               for (var i = 0; i < tweets.length; i++) {
                 tweetsContainer.append(
                   '<div class="tweet">' +
