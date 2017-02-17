@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <style>
+div {
+  
+  
+  .tweet {
+    border: 1px solid black;
+  }
+</style>
+  <h1> Top Trending Tweets</h1>
+    <script type="text/javascript" src="nearby-trends_files/codebird.js"></script>
+    <script type="text/javascript" src="jquery-3.1.1.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDH6T5N1Zwh7mLM2fA0RXoZGRIAN6NKDsI"></script>
+
+
+    <style>
+      body  {
+    background-color: #99ccff;
+}
+        h1 {
+          color: black;
+          text-align: center;
+          }
+        p {
+          font-family: verdana;
+          font-size: 20px;
+          }
+      #left-pane {
+        width: 25%;
+        float: left;
+          border: 1px solid black;
+          background-color: #99ccff;
+          padding-top: 50px;
+          padding-right: 30px;
+          padding-bottom: 50px;
+          padding-left: 80px;
+}
+      }
+      #right-pane {
+        width: 60%;
+        float: right;
+         border: 1px solid black;
+          background-color: ;
+          padding-top: 50px;
+          padding-right: 30px;
+          padding-bottom: 50px;
+          padding-left: 80px;
+}
+      }
+            #map {
+        width: 60%;
+        float: right;
+         border: 1px solid black;
+          background-color: #99ccff;
+          padding-top: 50px;
+          padding-right: 30px;
+          padding-bottom: 50px;
+          padding-left: 80px;
+}
+      }
+</style>
+
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A layout example with a side menu that hides on mobile, just like the Pure website.">
+    <title>Responsive Side Menu – Layout Examples – Pure</title>
+    
+    <link rel="stylesheet" href="Responsive%20Side%20Menu%20%E2%80%93%20Layout%20Examples%20%E2%80%93%20Pure_files/pure-min.css" integrity="sha384-UQiGfs9ICog+LwheBSRCt1o5cbyKIHbwjWscjemyBMT9YCUMZffs6UqUTd0hObXD" crossorigin="anonymous">
+    
+    
+    
+            
+    <link rel="stylesheet" href="Responsive%20Side%20Menu%20%E2%80%93%20Layout%20Examples%20%E2%80%93%20Pure_files/1.css">
+   
+    <script async="" src="Responsive%20Side%20Menu%20%E2%80%93%20Layout%20Examples%20%E2%80%93%20Pure_files/analytics.js"></script><script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    
+    ga('create', 'UA-41480445-1', 'purecss.io');
+    ga('send', 'pageview');
+    </script>
+</head>
+<body>
+
+
+    <div id="layout">
+        <!-- Menu toggle -->
+        <a href="#menu" id="menuLink" class="menu-link">
+            <!-- Hamburger icon -->
+            <span></span>
+        </a>
+
+        <div id="menu">
+            <div class="pure-menu">
+                <a class="pure-menu-heading" href="#">Locations</a>
+
+                <ul class="pure-menu-list">
+                    <li class="pure-menu-item"><a href="#" class="pure-menu-link">Home</a></li>
+                    <li class="pure-menu-item"><a href="#" class="pure-menu-link">New York</a></li>
+
+                    <li class="pure-menu-item">
+                        <a href="#" class="pure-menu-link">London</a>
+                    </li>
+
+                    <li class="pure-menu-item"><a href="#" class="pure-menu-link">Tokyo</a></li>
+                </ul>
+            </div>
+        </div>
+
+   
+
+
+
+
+<script src="Responsive%20Side%20Menu%20%E2%80%93%20Layout%20Examples%20%E2%80%93%20Pure_files/1.js"></script>
+ <h3> Your Current Location: </h3>
+    
+      <script type="text/javascript">
+      
+      getLocation();
+      $(document).on('click', '#left-pane a', function(event) {
+        event.preventDefault();
+        $('#iframe1').attr('src', $(this)[0].href)
+        window.cb.__call(
+          "search_tweets",
+          {
+            q: $(this)[0].text,
+          },
+          function (reply, err) {
+            if (err) {
+              console.log("error response or timeout exceeded" + err.error);
+            }
+            if (reply) {
+              var tweets = reply.statuses
+              var tweetsContainer = $('#tweets')
+              tweetsContainer.html('');
+              for (var i = 0; i < tweets.length; i++) {
+                tweetsContainer.append(
+                  '<div class="tweet">' +
+                    // tweetsContainer.append('<a href="' + tweets[i].entities.urls[0].url + '">' + tweets[i].text + '</a>')
+                    '<p>' + tweets[i].text + '</p>' +
+                    '<br>' +
+                    tweets[i].source +
+                    '<br>' +
+                  '</div>'
+                )
+              }
+            }
+          },
+          true
+        );
+      })
+      function getLocation() {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(showPosition);
+        } else {
+          x.innerHTML = "Geolocation is not supported by this browser.";
+        }
+      }
+      
+      function showPosition(position) {
+        function initMap() {
+          var uluru = {lat: position.coords.latitude, lng: position.coords.longitude};
+          var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 13,
+            center: uluru
+          });
+          var marker = new google.maps.Marker({
+            position: uluru,
+            map: map
+          });
+        }
+
+        initMap()
+
+        
+        var x = document.getElementById("demo");
+        x.innerHTML = "Latitude: " + position.coords.latitude + 
+        "<br>Longitude: " + position.coords.longitude; 
+        window.cb = new Codebird;
+        var twitterAppKey = 'egrZfq0Pmzd1I7bSG7gA4Cumn'
+        var twitterAppSecret = 'iGy6hlnzYE3NyMbcJL0EfkINTFvc4AiwLbB53v0no4mqJUVoHq'
+        window.cb.setConsumerKey(twitterAppKey, twitterAppSecret);
+        window.cb.__call(
+          "oauth2_token",
+          {},
+          function (reply, err) {
+            if (err) {
+              console.log("error response or timeout exceeded" + err.error);
+            }
+            if (reply) {
+              var authorisationToken = reply.access_token;
+              window.cb.setBearerToken(authorisationToken);
+              
+              // continue here...
+              // tip, you'll have to use window.cb.__call "trends_closest" here inside and use {lat: position.coords.latitude, long: position.coords.longitude} as the API request parameters 
+              // afterwards, you'll need to use another window.cb.__call "trends_place" inside the reply function of trends_closest
+              // Finally, you'll now then be able to get the list of trends that we need (see screenshot attached, I inserted debugger to pause)
+              window.cb.__call(
+                "trends_closest",
+                 {
+                   lat: position.coords.latitude,
+                   long: position.coords.longitude
+                 },
+                 function (reply) {
+                   if (reply) {
+                     var woeid = reply[0].woeid;
+                     window.cb.__call(
+                        "trends_place",
+                        {
+                             id: woeid
+                        },
+                        function (reply) {
+                          $(function() {
+                            var trends = reply[0].trends;
+                            var trendsContainer = $('#left-pane');
+                            for (var i = 0; i < trends.length; i++) {
+                              trendsContainer.append('<a href="' + trends[i].url + '">' + trends[i].name + '</a>');
+                              trendsContainer.append('<br>');
+                            }
+                          })
+                        }
+                     )
+                   }
+                 }
+              )
+            }
+          }
+        );
+      }
+    </script>
+    <div id='demo'>
+    </div>
+    <div id="map" style="width: 80%; height: 60%"></div> 
+
+   <script type="text/javascript"> 
+
+   </script> 
+    <div id='trends'>
+      <div id='left-pane'>
+      </div>
+      <div id='right-pane'>
+        <div id='tweets'>
+        </div> 
+      </div>
+      <div style='clear: both;'>
+      </div>
+    </div>
+
+
+</body>
+</html>
